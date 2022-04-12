@@ -9,7 +9,8 @@ impl Plugin for MainMenuPlugin {
     fn build(&self, app: &mut App) {
         let mut enter_menu = SystemStage::parallel()
             .with_system(create_menu);
-        let mut exit_menu = SystemStage::parallel();
+        let mut exit_menu = SystemStage::parallel()
+            .with_system(destroy_menu);
 
         app.stage(
             "TransitionStage",
@@ -28,8 +29,12 @@ impl Plugin for MainMenuPlugin {
     }
 }
 
-fn create_menu(mut commands: Commands, state: Res<CurrentState<GameState>>) {
-    println!("Creating menu! {:?}", state);
+fn create_menu(mut commands: Commands, state: Res<CurrentState<GameState>>, next_state: Res<NextState<GameState>>) {
+    println!("Creating menu! {:?} {:?}", state, next_state);
+}
+
+fn destroy_menu(mut commands: Commands, state: Res<CurrentState<GameState>>, next_state: Res<NextState<GameState>>) {
+    println!("Destroying menu! {:?} {:?}", state, next_state);
 }
 
 fn main_menu(mut commands: Commands, mut egui_context: ResMut<EguiContext>) {
