@@ -1,14 +1,14 @@
 use crate::GameState;
 use bevy::prelude::*;
-use iyes_loopless::prelude::*;
 use bevy_egui::{egui, EguiContext};
+use iyes_loopless::prelude::*;
 
 pub(crate) struct GameplayPlugin;
 
 impl Plugin for GameplayPlugin {
     fn build(&self, app: &mut App) {
-        let mut enter_gameplay = SystemStage::parallel();
-        let mut exit_gameplay = SystemStage::parallel();
+        let enter_gameplay = SystemStage::parallel();
+        let exit_gameplay = SystemStage::parallel();
 
         app.stage(
             "TransitionStage",

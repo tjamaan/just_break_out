@@ -1,16 +1,17 @@
+use crate::systems::persistence;
 use crate::GameState;
 use bevy::prelude::*;
-use iyes_loopless::prelude::*;
 use bevy_egui::{egui, EguiContext};
+use iyes_loopless::prelude::*;
 
 pub(crate) struct MainMenuPlugin;
 
 impl Plugin for MainMenuPlugin {
     fn build(&self, app: &mut App) {
-        let mut enter_menu = SystemStage::parallel()
-            .with_system(create_menu);
-        let mut exit_menu = SystemStage::parallel()
-            .with_system(destroy_menu);
+        let enter_menu = SystemStage::parallel().with_system(create_menu);
+        let exit_menu = SystemStage::parallel()
+            .with_system(destroy_menu)
+            .with_system(persistence::destroy_nonpersistent_entities);
 
         app.stage(
             "TransitionStage",
@@ -29,11 +30,19 @@ impl Plugin for MainMenuPlugin {
     }
 }
 
-fn create_menu(mut commands: Commands, state: Res<CurrentState<GameState>>, next_state: Res<NextState<GameState>>) {
+fn create_menu(
+    mut _commands: Commands,
+    state: Res<CurrentState<GameState>>,
+    next_state: Res<NextState<GameState>>,
+) {
     println!("Creating menu! {:?} {:?}", state, next_state);
 }
 
-fn destroy_menu(mut commands: Commands, state: Res<CurrentState<GameState>>, next_state: Res<NextState<GameState>>) {
+fn destroy_menu(
+    mut _commands: Commands,
+    state: Res<CurrentState<GameState>>,
+    next_state: Res<NextState<GameState>>,
+) {
     println!("Destroying menu! {:?} {:?}", state, next_state);
 }
 

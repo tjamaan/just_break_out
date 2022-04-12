@@ -1,9 +1,10 @@
 mod plugins;
+mod systems;
 
 use bevy::prelude::*;
-use iyes_loopless::prelude::*;
 use bevy_egui::EguiPlugin;
-use plugins::{MainMenuPlugin, GameplayPlugin, GameOverPlugin};
+use iyes_loopless::prelude::*;
+use plugins::{GameOverPlugin, GameplayPlugin, MainMenuPlugin};
 
 #[derive(Debug, Clone, Eq, PartialEq, Hash)]
 enum GameState {
@@ -26,7 +27,7 @@ fn main() {
         .add_stage_after(
             CoreStage::PreUpdate,
             "TransitionStage",
-            StateTransitionStage::new(GameState::MainMenu)
+            StateTransitionStage::new(GameState::MainMenu),
         )
         .add_plugin(MainMenuPlugin)
         .add_plugin(GameplayPlugin)
