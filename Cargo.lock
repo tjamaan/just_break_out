@@ -1779,9 +1779,9 @@ checksum = "1aab8fc367588b89dcee83ab0fd66b72b50b72fa1904d7095045ace2b0c81c35"
 
 [[package]]
 name = "iyes_loopless"
-version = "0.2.0"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "872ac7bc8ae7a8663c794adf92323b109d25d0abaac744812c12a1cf6d37bb7e"
+checksum = "15545e9025b77a773178cf96fad2cfee392bb3a9974d78c0aff985f2b5735a04"
 dependencies = [
  "bevy_core",
  "bevy_ecs",

@@ -32,16 +32,16 @@ impl Plugin for MainMenuPlugin {
 
 fn create_menu(
     mut _commands: Commands,
-    state: Res<CurrentState<GameState>>,
-    next_state: Res<NextState<GameState>>,
+    state: Option<Res<CurrentState<GameState>>>,
+    next_state: Option<Res<NextState<GameState>>>,
 ) {
     println!("Creating menu! {:?} {:?}", state, next_state);
 }
 
 fn destroy_menu(
     mut _commands: Commands,
-    state: Res<CurrentState<GameState>>,
-    next_state: Res<NextState<GameState>>,
+    state: Option<Res<CurrentState<GameState>>>,
+    next_state: Option<Res<NextState<GameState>>>,
 ) {
     println!("Destroying menu! {:?} {:?}", state, next_state);
 }
