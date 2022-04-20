@@ -1,6 +1,6 @@
 use crate::systems::persistence;
 use crate::GameState;
-use bevy::prelude::*;
+use bevy::{prelude::*};
 use bevy_egui::{egui, EguiContext};
 use iyes_loopless::prelude::*;
 
@@ -31,11 +31,21 @@ impl Plugin for MainMenuPlugin {
 }
 
 fn create_menu(
-    mut _commands: Commands,
+    mut commands: Commands,
     state: Option<Res<CurrentState<GameState>>>,
     next_state: Option<Res<NextState<GameState>>>,
 ) {
     println!("Creating menu! {:?} {:?}", state, next_state);
+
+    commands.spawn()
+        .insert_bundle(SpriteBundle {
+            sprite: Sprite {
+                color: Color::RED,
+                custom_size: Some(Vec2::new(100.0, 100.0)),
+                ..Default::default()
+            },
+            ..Default::default()
+        });
 }
 
 fn destroy_menu(
@@ -54,6 +64,9 @@ fn main_menu(mut commands: Commands, mut egui_context: ResMut<EguiContext>) {
                 ui.vertical_centered(|ui| {
                     if ui.button("Play").clicked() {
                         commands.insert_resource(NextState(GameState::Gameplay));
+                    }
+                    if ui.button("Main menu??!").clicked() {
+                        commands.insert_resource(NextState(GameState::MainMenu));
                     }
                     if ui.button("Quit").clicked() {
                         println!("Eh... maybe next time.");

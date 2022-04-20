@@ -5,6 +5,7 @@ use bevy::prelude::*;
 use bevy_egui::EguiPlugin;
 use iyes_loopless::prelude::*;
 use plugins::{GameOverPlugin, GameplayPlugin, MainMenuPlugin};
+use systems::persistence::Persistent;
 
 #[derive(Debug, Clone, Eq, PartialEq, Hash)]
 enum GameState {
@@ -29,8 +30,13 @@ fn main() {
             "TransitionStage",
             StateTransitionStage::new(GameState::MainMenu),
         )
+        .add_startup_system(setup_camera)
         .add_plugin(MainMenuPlugin)
         .add_plugin(GameplayPlugin)
         .add_plugin(GameOverPlugin)
         .run();
+}
+
+fn setup_camera(mut commands: Commands) {
+    commands.spawn_bundle(OrthographicCameraBundle::new_2d()).insert(Persistent);
 }
