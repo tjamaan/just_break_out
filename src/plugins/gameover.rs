@@ -1,4 +1,4 @@
-use crate::GameState;
+use crate::{systems::state_chooser, GameState};
 use bevy::prelude::*;
 use bevy_egui::{egui, EguiContext};
 use iyes_loopless::prelude::*;
@@ -21,25 +21,8 @@ impl Plugin for GameOverPlugin {
         .add_system_set(
             ConditionSet::new()
                 .run_in_state(GameState::GameOver)
-                .with_system(gameover)
+                .with_system(state_chooser::state_chooser)
                 .into(),
         );
     }
-}
-
-fn gameover(mut commands: Commands, mut egui_context: ResMut<EguiContext>) {
-    egui::CentralPanel::default().show(egui_context.ctx_mut(), |ui| {
-        egui::Area::new("buttons")
-            .anchor(egui::Align2::CENTER_CENTER, egui::vec2(0.0, 0.0))
-            .show(ui.ctx(), |ui| {
-                ui.vertical_centered(|ui| {
-                    if ui.button("Game Over /YEAAAAH/").clicked() {
-                        commands.insert_resource(NextState(GameState::MainMenu));
-                    }
-                    if ui.button("Quit").clicked() {
-                        println!("Eh... maybe next time.");
-                    }
-                });
-            });
-    });
 }
